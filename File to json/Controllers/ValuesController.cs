@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using File_to_json.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace File_to_json.Controllers
@@ -40,6 +41,35 @@ namespace File_to_json.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [HttpPost("test")]
+        public IActionResult Test(InputEncapsulationModel input)
+        {
+            List<InputModel> inputList = input.InputModels;
+            if(inputList.Count == 0)
+            {
+                return NoContent();
+            }
+            else
+            {
+                if(input.SortID == "")
+                {
+                    return Ok(inputList);
+                }
+                else
+                {
+                    List<InputModel> returnList = inputList.Where(i => i.id == input.SortID).ToList();
+                    return Ok(returnList);
+                }
+                
+            }
+            
+        }
+        [HttpPost("file")]
+        public IActionResult File(string input)
+        {
+            return Ok(input);
         }
     }
 }
