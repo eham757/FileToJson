@@ -12,6 +12,9 @@ namespace File_to_json.Models
         public bool q { get; set; }
         public string t { get; set; }
 
-        public string ToString => String.Format("{0}|{1}", id, v);
+        public string ToString()
+        {
+            return String.Format("{0},{1},{2}", id, v, t);
+        }
     }
 }
