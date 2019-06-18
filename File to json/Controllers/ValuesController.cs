@@ -55,26 +55,22 @@ namespace File_to_json.Controllers
             }
             else
             {
-                if(input.SortID == "")
+                if(input.SortID == "" | input.SortID == null)
                 {
-                    return Ok(inputList);
+                    input.SortID = "Falcon lijn.Pers-groep.WP6.DataBlocksGlobal.DB_PressRxD.in.ps3AVForcePress";
                 }
-                else
+                List<InputModel> valList = inputList.Where(i => i.id == input.SortID).ToList();
+                List<ExportModel> returnList = new List<ExportModel>();
+                foreach (InputModel val in valList)
                 {
-                    List<InputModel> valList = inputList.Where(i => i.id == input.SortID).ToList();
-                    List<ExportModel> returnList = new List<ExportModel>();
-                    foreach (InputModel val in valList)
-                    {
-                        ExportModel exportModel = new ExportModel();
-                        exportModel.ID = 1;
-                        exportModel.y = double.Parse(val.v);
-                        exportModel.x = double.Parse(val.t);
-                        returnList.Add(exportModel);
-                    }
-                    return Ok(returnList);
-                    // return format of type [ ID,y,x ] in which ID is ID y = v x = t
-
+                    ExportModel exportModel = new ExportModel();
+                    exportModel.ID = 1;
+                    exportModel.y = double.Parse(val.v);
+                    exportModel.x = double.Parse(val.t);
+                    returnList.Add(exportModel);
                 }
+                return Ok(returnList);
+                // return format of type [ ID,y,x ] in which ID is ID y = v x = t
                 
             }
             
